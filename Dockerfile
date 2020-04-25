@@ -27,13 +27,11 @@ ENV APP_HOME /var/www/html
 
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-RUN sed -i -e "s/html/html\/webroot/g" /etc/apache2/apache2.conf
-
 RUN a2enmod rewrite
-
-COPY . $APP_HOME
 
 RUN chown -R www-data:www-data $APP_HOME
 
+COPY 000-default.conf /etc/apache2/sites-available/
+COPY default-ssl.conf /etc/apache2/sites-available/
 COPY php.ini /usr/local/etc/php/
 
